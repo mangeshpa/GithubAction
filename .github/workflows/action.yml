@@ -148,7 +148,7 @@ jobs:
         #uses: mattallty/jest-github-action@v1
         #env:
           #GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-      - name: jest test
+      - name: jest test add
       - uses: actions/checkout@v1
       - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
         with:
