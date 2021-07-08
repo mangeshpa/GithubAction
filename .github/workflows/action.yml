@@ -148,7 +148,12 @@ jobs:
         #uses: mattallty/jest-github-action@v1
         #env:
           #GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}      
-          
+      - name: jest test add
+      - uses: actions/checkout@v1
+      - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        with:
+          github-token: ${{ secrets.GIT_TOKEN }}
+          #   threshold: 80 # optional parameter          
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
     # Scan code with Checkmarx
