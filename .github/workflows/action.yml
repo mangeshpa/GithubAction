@@ -133,6 +133,12 @@ jobs:
         if: always()
         with:
           files: target/surefire-reports/*.xml
+      ######## Jest Test with Maven ########
+      - name: Publish jest Test Results
+        uses: mattallty/jest-github-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
         
       ######## Setup .Net  ########
       - name: Setup .NET 3.x
