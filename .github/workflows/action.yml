@@ -138,10 +138,9 @@ jobs:
       - name: cicicic
         uses: actions/checkout@v2
       - name: Install modules
-        run: yarn
-      - name: Run tests
-        run: yarn test
-
+        run: yarn     
+      - name: Run Jest
+        uses: stefanoeb/jest-action@1.0.3
     
         
       ######## Setup .Net  ########
