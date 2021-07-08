@@ -128,7 +128,11 @@ jobs:
       #- name: Test with Maven
         #run: mvn -B test --file pom.xml
       - name: Build with Maven
-        run: mvn -B test        
+        run: mvn -B test
+      - name: Generate JaCoCo Badge
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true        
         
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -169,9 +173,3 @@ jobs:
     steps:
       - uses: actions/checkout@v2
  #       if: ${{ job.status == 2 }}
-
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          generate-branches-badge: true
- 
