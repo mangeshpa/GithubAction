@@ -185,14 +185,4 @@ jobs:
           name: artifact 
           path: $GITHUB_WORKSPACE
           # optional, default is artifact
-          # A file, directory or wildcard pattern that describes what to upload                   
-  coverage:
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    steps:
-        - name: jest test add
-        - uses: actions/checkout@v1
-        - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
-          with:
-            github-token: ${{ secrets.GIT_TOKEN }}
-          #   threshold: 80 # optional parameter
+          # A file, directory or wildcard pattern that describes what to upload
