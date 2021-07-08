@@ -125,8 +125,8 @@ jobs:
 #          notification-color: dc3545
 
       ######## JUnit Test with Maven ########
-      - name: Test with Maven
-        run: mvn -B test --file pom.xml
+      #- name: Test with Maven
+        #run: mvn -B test --file pom.xml
       - name: Build with Maven
         run: mvn -B test        
         
