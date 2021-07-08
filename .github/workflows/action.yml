@@ -134,11 +134,7 @@ jobs:
         with:
           files: target/surefire-reports/*.xml
           
-      ######## Jest Test with Maven ########
-      - name: cicicic
-        uses: actions/checkout@v2
-      - name: Install modules
-        run: yarn     
+      ######## Jest Test with Maven ########     
       - name: Run Jest
         uses: stefanoeb/jest-action@1.0.3
     
