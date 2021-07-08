@@ -135,14 +135,13 @@ jobs:
           files: target/surefire-reports/*.xml
           
       ######## Jest Test with Maven ########
-      - name: Publish jest Test Results
-        run: jest --json --outputFile=result.json --testLocationInResults
-        
-      - name: Publish jest Test Results
-        uses: tanmen/jest-reporter@v1
-        if: always()
-        with:
-          github-token: ${{ secrets.GIT_TOKEN }}
+      - name: cicicic
+        uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Run tests
+        run: yarn test
+
     
         
       ######## Setup .Net  ########
