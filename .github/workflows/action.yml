@@ -144,11 +144,30 @@ jobs:
       ######## Jest Test ########     
       #- name: Run Jest
         #uses: stefanoeb/jest-action@1.0.3
-      - name: run jest test 
-        uses: mattallty/jest-github-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-        
+      #- name: run jest test 
+        #uses: mattallty/jest-github-action@v1
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+    
+    
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+    # Scan code with Checkmarx
+      - name: Checkmarx CxFlow Action
+        uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.1
+        with:
+          project: githubaction
+          team: '/CxServer/SP/Checkmarx'
+          checkmarx_url: ${{ secrets.CHECKMARX_URL }}
+          checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
+          checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
+          checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
+    # Upload SARIF report for CodeQL / Security Alerts PRocessing
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: cx.sarif
+          
       ######## Setup .Net  ########
       - name: Setup .NET 3.x
         if: ${{ env.STACK == 'dotnet' }}
