@@ -128,12 +128,7 @@ jobs:
       #- name: Test with Maven
         #run: mvn -B test --file pom.xml
       - name: Build with Maven
-        run: mvn -B test
-        
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
-        with:
-          generate-branches-badge: true        
+        run: mvn -B test      
         
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -147,25 +142,17 @@ jobs:
       #- name: run jest test 
         #uses: mattallty/jest-github-action@v1
         #env:
-          #GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}      
+          #GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}   
           
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Node.js CI
       - uses: actions/checkout@v2
-    # Scan code with Checkmarx
-      - name: Checkmarx CxFlow Action
-        uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.1
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
-          project: githubaction
-          team: '/CxServer/SP/Checkmarx'
-          checkmarx_url: ${{ secrets.CHECKMARX_URL }}
-          checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
-          checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
-          #checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
-    # Upload SARIF report for CodeQL / Security Alerts PRocessing
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: cx.sarif
+          node-version: '12.x'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
           
       ######## Setup .Net  ########
       - name: Setup .NET 3.x
