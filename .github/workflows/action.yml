@@ -48,6 +48,9 @@ jobs:
 #            });
   Build:
     runs-on: ubuntu-latest 
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]    
     
     steps:
     ######## Checkout code ########
@@ -89,11 +92,21 @@ jobs:
 #        run: echo ${{ steps.setup_jdk.outcome }}
         
       ######## Build - Maven ########
-      #- name: Build with Maven
-        #id: build_maven
-        #if: ${{ env.BUILD_TECH == 'java_maven' }}
-        #run: mvn ${{ env.MVN_ARGS }}
-        #continue-on-error: ${{ env.CONTINUE_ON_ERROR }}
+      - name: Build with Maven
+        id: build_maven
+        if: ${{ env.BUILD_TECH == 'java_maven' }}
+        run: mvn ${{ env.MVN_ARGS }}
+        continue-on-error: ${{ env.CONTINUE_ON_ERROR }}
+        
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
     
       ######## Build - Ant ########
       - name: Build with Ant
@@ -129,16 +142,6 @@ jobs:
         #run: mvn -B test --file pom.xml
       - name: Build with Maven
         run: mvn -B test      
-
-      - name: Node.js CI
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12.x'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
       
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
